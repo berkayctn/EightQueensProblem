@@ -14,7 +14,7 @@ public class Main {
         }
     }
 
-    public static int[] randomGenerator() {
+    public static int[] randomTableGenerator() {
         Random random = new Random();
         int[] pTable = new int[8];
 
@@ -25,7 +25,7 @@ public class Main {
         return pTable;
     }
 
-    public static int fitness(int[] table) {
+    public static int fitnessCalculator(int[] table) {
         int fitness = 0;
         for (int i = 0; i < table.length; i++) {
             for (int j = i + 1; j < table.length; j++) {
@@ -43,7 +43,7 @@ public class Main {
     public static int[] bestN(int[] table) {
         int[] BestT;
         BestT = table.clone();
-        int BestF = fitness(table);
+        int BestF = fitnessCalculator(table);
         int[] tempT;
 
         for (int i = 0; i < 8; i++) {
@@ -52,7 +52,7 @@ public class Main {
                 if (tempT[i] != j) {
                     tempT[i] = j;
                 }
-                int tempF = fitness(tempT);
+                int tempF = fitnessCalculator(tempT);
                 if (tempF < BestF) {
                     BestT = tempT.clone();
                     BestF = tempF;
@@ -63,17 +63,18 @@ public class Main {
     }
 
     public static void hillClimbing() {
-        int[] tempT = randomGenerator().clone();
+        int[] tempT = randomTableGenerator().clone();
         int randomCount = 0, moveCount = 0;
         boolean exitLoop = false;
 
         while (!exitLoop) {
 
-            if (fitness(tempT) > fitness(bestN(tempT)) && fitness(tempT) != 0) {
+            if (fitnessCalculator(tempT) > fitnessCalculator(bestN(tempT)) && fitnessCalculator(tempT) != 0) {
                 tempT = bestN(tempT).clone();
                 moveCount++;
-            } else if (fitness(tempT) <= fitness(bestN(tempT)) && fitness(tempT) != 0) {
-                tempT = randomGenerator();
+
+            } else if (fitnessCalculator(tempT) <= fitnessCalculator(bestN(tempT)) && fitnessCalculator(tempT) != 0) {
+                tempT = randomTableGenerator();
                 randomCount++;
 
             } else {
@@ -81,7 +82,7 @@ public class Main {
                     System.out.print(tempT[i]);
                 }
                 System.out.println(" ");
-                System.out.println("Fitness: " + fitness(tempT));
+                System.out.println("Fitness: " + fitnessCalculator(tempT));
                 System.out.println("Move Count: " + moveCount);
                 System.out.println("Random Count: " + randomCount);
                 exitLoop = true;
@@ -92,7 +93,6 @@ public class Main {
                             System.out.print(" Q ");
                         } else {
                             System.out.print(" - ");
-
                         }
                     }
                     System.out.println(" ");
