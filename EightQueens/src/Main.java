@@ -65,9 +65,9 @@ public class Main {
     public static void hillClimbing() {
         int[] tempT = randomGenerator().clone();
         int randomCount = 0, moveCount = 0;
-        boolean breakProcess = false;
+        boolean exitLoop = false;
 
-        while (!breakProcess) {
+        while (!exitLoop) {
 
             if (fitness(tempT) > fitness(bestN(tempT)) && fitness(tempT) != 0) {
                 tempT = bestN(tempT).clone();
@@ -84,7 +84,7 @@ public class Main {
                 System.out.println("Fitness: " + fitness(tempT));
                 System.out.println("Move Count: " + moveCount);
                 System.out.println("Random Count: " + randomCount);
-                breakProcess = true;
+                exitLoop = true;
 
                 for (int i = 0; i < 8; i++) {
                     for (int j = 1; j < 9; j++) {
